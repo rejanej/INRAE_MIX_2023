@@ -311,25 +311,26 @@ class TraitementsDonnees:
 
         # Parcourir chaque colonne et créer les graphiques
         for i, colonne in enumerate(selected_columns):
-            indices_outliers = self.methode(self,colonne)
+            if colonne != "DATE":
+                indices_outliers = self.methode(self,colonne)
+    
+                # Positionner le subplot
+                ax = axes[i // n_cols, i % n_cols] if n_rows > 1 else axes[i % n_cols]
+    
+                # Tracer les données
+                ax.scatter(self.df.index, self.df[colonne], label='Données', marker='x')
+    
+                # Mettre en évidence les outliers
+                if len(indices_outliers) > 0:
+                    ax.scatter(indices_outliers, self.df.iloc[indices_outliers][colonne], color='red', label='Outliers', marker="x")
+    
+                # Ajouter des étiquettes et un titre
+                ax.set_xlabel('Indice')
+                ax.set_ylabel(colonne)
+                ax.set_title(f'Graphique pour {colonne}')
 
-            # Positionner le subplot
-            ax = axes[i // n_cols, i % n_cols] if n_rows > 1 else axes[i % n_cols]
-
-            # Tracer les données
-            ax.scatter(self.df.index, self.df[colonne], label='Données', marker='x')
-
-            # Mettre en évidence les outliers
-            if len(indices_outliers) > 0:
-                ax.scatter(indices_outliers, self.df.iloc[indices_outliers][colonne], color='red', label='Outliers', marker="x")
-
-            # Ajouter des étiquettes et un titre
-            ax.set_xlabel('Indice')
-            ax.set_ylabel(colonne)
-            ax.set_title(f'Graphique pour {colonne}')
-
-            # Afficher la légende
-            ax.legend()
+                # Afficher la légende
+                ax.legend()
 
         # Afficher le graphique principal
         plt.show()
@@ -353,21 +354,22 @@ class TraitementsDonnees:
 
         # Parcourir chaque colonne et créer les graphiques
         for i, colonne in enumerate(selected_columns):
-            # Positionner le subplot
-            ax = axes[i // n_cols, i % n_cols] if n_rows > 1 else axes[i % n_cols]
-            indices_outliers = self.methode(self,colonne)
-            # Tracer les données sans outliers
-            #ax.scatter(df.index, df[colonne], label='Données', marker='x')
-            
-            ax.scatter(indices_outliers, self.df.iloc[indices_outliers][colonne], color='red', label='Outliers', marker="x")
-
-            # Ajouter des étiquettes et un titre
-            ax.set_xlabel('Indice')
-            ax.set_ylabel(colonne)
-            ax.set_title(f'Graphique pour {colonne}')
-
-            # Afficher la légende
-            ax.legend()
+            if colonne != "DATE":
+                # Positionner le subplot
+                ax = axes[i // n_cols, i % n_cols] if n_rows > 1 else axes[i % n_cols]
+                indices_outliers = self.methode(self,colonne)
+                # Tracer les données sans outliers
+                #ax.scatter(df.index, df[colonne], label='Données', marker='x')
+                
+                ax.scatter(indices_outliers, self.df.iloc[indices_outliers][colonne], color='red', label='Outliers', marker="x")
+    
+                # Ajouter des étiquettes et un titre
+                ax.set_xlabel('Indice')
+                ax.set_ylabel(colonne)
+                ax.set_title(f'Graphique pour {colonne}')
+    
+                # Afficher la légende
+                ax.legend()
 
         # Afficher le graphique principal
         plt.show()
@@ -391,22 +393,23 @@ class TraitementsDonnees:
 
         # Parcourir chaque colonne et créer les graphiques
         for i, colonne in enumerate(selected_columns):
-            # Positionner le subplot
-            ax = axes[i // n_cols, i % n_cols] if n_rows > 1 else axes[i % n_cols]
-            indices_outliers = self.methode(self,colonne)
-            # Tracer les données sans outliers
-            #ax.scatter(df.index, df[colonne], label='Données', marker='x')
-            data_without_outliers = self.df.drop(index=indices_outliers)
-            df2 = df2.drop(index = indices_outliers, errors='ignore')
-            ax.scatter(data_without_outliers.index, data_without_outliers[colonne], label='Données sans outliers', marker='x')
-
-            # Ajouter des étiquettes et un titre
-            ax.set_xlabel('Indice')
-            ax.set_ylabel(colonne)
-            ax.set_title(f'Graphique pour {colonne}')
-
-            # Afficher la légende
-            ax.legend()
+            if colonne != "DATE":
+                # Positionner le subplot
+                ax = axes[i // n_cols, i % n_cols] if n_rows > 1 else axes[i % n_cols]
+                indices_outliers = self.methode(self,colonne)
+                # Tracer les données sans outliers
+                #ax.scatter(df.index, df[colonne], label='Données', marker='x')
+                data_without_outliers = self.df.drop(index=indices_outliers)
+                df2 = df2.drop(index = indices_outliers, errors='ignore')
+                ax.scatter(data_without_outliers.index, data_without_outliers[colonne], label='Données sans outliers', marker='x')
+    
+                # Ajouter des étiquettes et un titre
+                ax.set_xlabel('Indice')
+                ax.set_ylabel(colonne)
+                ax.set_title(f'Graphique pour {colonne}')
+    
+                # Afficher la légende
+                ax.legend()
 
         # Afficher le graphique principal
         plt.show()
