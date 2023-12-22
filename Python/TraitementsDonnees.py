@@ -506,10 +506,8 @@ class TraitementsDonnees:
         # Get the start and end dates from the entries
         start_date = start_date_entry.get()
         end_date = end_date_entry.get()
-        print(start_date,end_date)
         selected_variables = var_listbox.curselection()
         # Filter the DataFrame based on the selected date range
-        df_filtered = self.drop_outliers(selected_columns)
         df_filtered = self.filter_dataframe_by_date(start_date=start_date, end_date=end_date)
 
         # Create a subplot
